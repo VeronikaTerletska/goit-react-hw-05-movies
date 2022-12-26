@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-export function ReviewCard({ review: { author, content } }) {
+export function ReviewCard({ review: { id, author, content } }) {
   return (
-    <li>
+    <li key={id}>
       <h3>{`Author: ${author}`}</h3>
       <p>{content}</p>
     </li>

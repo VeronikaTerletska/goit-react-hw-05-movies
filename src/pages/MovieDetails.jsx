@@ -1,12 +1,5 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
-import {
-  Routes,
-  Route,
-  useParams,
-  useNavigate,
-  useLocation,
-  Link,
-} from 'react-router-dom';
+import { useState, useEffect, Suspense } from 'react';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import * as API from 'FechApi/FechApiFilms';
 
 import {
@@ -17,9 +10,6 @@ import {
   LinkWrapper,
 } from '../components/MovieDetails/MovieDetails.styled';
 
-const Cast = lazy(() => import('./Сast'));
-const Reviews = lazy(() => import('./Reviews'));
-
 const MovieDetailsPage = () => {
   const [movie, setMovie] = useState(null);
   const [buttonLocation, setButtonLocation] = useState(null);
@@ -28,7 +18,7 @@ const MovieDetailsPage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    API.getOneMovie(movieId).then(r => setMovie(r));
+    API.getOneMovie(movieId).then(setMovie);
   }, [movieId]);
 
   useEffect(() => {
@@ -75,15 +65,14 @@ const MovieDetailsPage = () => {
         </Container>
         <LinkWrapper>
           <h3>Additional information</h3>
-          <Link to="cast">Cast</Link>
-          <Link to="reviews">Reviews</Link>
+          <Link to="cast" state={{ from: location.state?.from ?? '/' }}>
+            Cast
+          </Link>
+          <Link to="reviews" state={{ from: location.state?.from ?? '/' }}>
+            Reviews
+          </Link>
         </LinkWrapper>
-        <Suspense fallback={<p>Loading...</p>}>
-          <Routes>
-            <Route path="cast" element={<Cast />} />
-            <Route path="reviews" element={<Reviews />} />
-          </Routes>
-        </Suspense>
+        <Suspense fallback={<p>Loading...</p>}></Suspense>
       </>
     )
   );

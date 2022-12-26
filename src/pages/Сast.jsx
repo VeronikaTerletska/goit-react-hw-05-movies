@@ -8,15 +8,25 @@ const Cast = () => {
   let { movieId } = useParams();
 
   useEffect(() => {
-    API.getCast(movieId).then(r => setCast(r));
+    API.getCast(movieId).then(setCast);
   }, [movieId]);
 
+  if (!cast) {
+    return null;
+  }
+
   return (
-    <ul>
-      {cast?.map((oneCast, index) => (
-        <CastCard key={index} oneCast={oneCast} />
-      ))}
-    </ul>
+    <>
+      {cast.lenth > 0 ? (
+        <ul>
+          {cast?.map((oneCast, id) => (
+            <CastCard key={id} oneCast={oneCast} />
+          ))}
+        </ul>
+      ) : (
+        <p>No cast</p>
+      )}
+    </>
   );
 };
 export default Cast;

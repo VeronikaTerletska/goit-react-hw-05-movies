@@ -4,21 +4,26 @@ import * as API from 'FechApi/FechApiFilms';
 import { ReviewCard } from 'components/ReviewsCard/ReviewsCard';
 
 const Reviews = () => {
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState([]);
   let { movieId } = useParams();
 
   useEffect(() => {
-    API.getReviews(movieId).then(r => setReviews(r));
+    API.getReviews(movieId).then(setReviews);
   }, [movieId]);
+
+  if (!reviews) {
+    return null;
+  }
 
   return (
     <>
-      <ul>
-        {reviews?.map(review => (
-          <ReviewCard key={review.id} review={review} />
-        ))}
-      </ul>
-      {reviews?.length === 0 && (
+      {reviews.length > 0 ? (
+        <ul>
+          {reviews?.map(review => (
+            <ReviewCard key={review.id} review={review} />
+          ))}
+        </ul>
+      ) : (
         <p>We don`t have any reviews for this movies</p>
       )}
     </>
