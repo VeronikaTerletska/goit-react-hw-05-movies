@@ -17,7 +17,7 @@ const Cast = () => {
 
   return (
     <>
-      {cast.lenth > 0 ? (
+      {cast.length > 0 ? (
         <ul>
           {cast?.map((oneCast, id) => (
             <CastCard key={id} oneCast={oneCast} />

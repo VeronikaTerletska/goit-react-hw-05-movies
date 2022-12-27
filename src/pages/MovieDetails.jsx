@@ -1,5 +1,11 @@
 import { useState, useEffect, Suspense } from 'react';
-import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+  Link,
+  Outlet,
+} from 'react-router-dom';
 import * as API from 'FechApi/FechApiFilms';
 
 import {
@@ -71,6 +77,7 @@ const MovieDetailsPage = () => {
           <Link to="reviews" state={{ from: location.state?.from ?? '/' }}>
             Reviews
           </Link>
+          <Outlet />
         </LinkWrapper>
         <Suspense fallback={<p>Loading...</p>}></Suspense>
       </>
